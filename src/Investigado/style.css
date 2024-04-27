@@ -1,0 +1,10 @@
+.container-investigado{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.span-card-investigado{
+    font-size: 20px;
+    font-weight: 700;
+}

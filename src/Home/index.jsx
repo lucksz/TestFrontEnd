@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardMedia, CardContent, CardActions, Button } from '@mui/material';
 import { IoPersonCircleSharp } from "react-icons/io5";
-
+import { Link } from 'react-router-dom';
 import './style.css'
 
 export default function Home() {
@@ -30,6 +30,8 @@ export default function Home() {
                         variant='contained'
                         color='primary'
                         size='small'
+                        component={Link}
+                        to={'/investigado'}
                     >
                         Mais informações
                     </Button>
