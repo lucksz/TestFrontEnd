@@ -1,14 +1,34 @@
-import React from 'react';
-import { Card, CardMedia, CardContent, CardActions, Button } from '@mui/material';
+import React, { useState } from 'react';
+import { Card, CardMedia, CardContent, CardActions, Button, Modal, Box } from '@mui/material';
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import { IoIosPhonePortrait } from "react-icons/io";
 import { IoIosMail } from "react-icons/io";
 import { BsBuildingsFill } from "react-icons/bs";
 import { FaHouse } from "react-icons/fa6";
+
+import InfoCompleta from './InfoCompleta';
+
 import './style.css'
 
+
 export default function Investigado() {
+    const [openInfo, setOpenInfo] = useState(false);
+
+    const propriedadesModal = (w) => {
+        return {
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: w,
+            bgcolor: 'background.paper',
+            borderRadius: '10px',
+            boxShadow: 24,
+            p: 4,
+        }
+    }
+
     return (
         <div className='container-investigado'>
             <Card sx={{ minWidth: 275, margin: '1rem' }}>
@@ -24,6 +44,7 @@ export default function Investigado() {
                         color='primary'
                         size='small'
                         style={{ width: '100%' }}
+                        onClick={() => setOpenInfo(true)}
                     >
                         Abrir
                     </Button>
@@ -119,6 +140,17 @@ export default function Investigado() {
                     </Button>
                 </CardActions>
             </Card>
+
+            <Modal
+                open={openInfo}
+                onClose={() => setOpenInfo(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={propriedadesModal(1300)}>
+                    <InfoCompleta close={setOpenInfo} />
+                </Box>
+            </Modal>
         </div>
     );
 }
