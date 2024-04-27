@@ -8,12 +8,15 @@ import { BsBuildingsFill } from "react-icons/bs";
 import { FaHouse } from "react-icons/fa6";
 
 import InfoCompleta from './InfoCompleta';
+import Cellphones from './Cellphones';
 
 import './style.css'
 
 
+
 export default function Investigado() {
     const [openInfo, setOpenInfo] = useState(false);
+    const [openCellphones, setOpenCellphones] = useState(false);
 
     const propriedadesModal = (w) => {
         return {
@@ -63,6 +66,7 @@ export default function Investigado() {
                         color='primary'
                         size='small'
                         style={{ width: '100%' }}
+                        onClick={() => setOpenCellphones(true)}
                     >
                         Abrir
                     </Button>
@@ -149,6 +153,16 @@ export default function Investigado() {
             >
                 <Box sx={propriedadesModal(1300)}>
                     <InfoCompleta close={setOpenInfo} />
+                </Box>
+            </Modal>
+            <Modal
+                open={openCellphones}
+                onClose={() => setOpenCellphones(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={propriedadesModal(1300)}>
+                    <Cellphones close={setOpenCellphones} />
                 </Box>
             </Modal>
         </div>

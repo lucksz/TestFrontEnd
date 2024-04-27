@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardMedia, CardContent, Button } from '@mui/material';
+import { Card, CardContent, Button } from '@mui/material';
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { FaCalculator } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";

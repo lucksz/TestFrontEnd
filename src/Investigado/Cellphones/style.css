@@ -1,0 +1,42 @@
+.cellphones-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.cellphones-grid{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.card-grid{
+    display: grid;
+    grid-template-columns: 1fr 8fr 1fr;
+    gap: 1rem;
+}
+
+.logo-operadoras{
+    max-width: 2rem;
+}
+
+.linha-final-cellphones{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.legendas-card{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+}
+
+.legenda{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
