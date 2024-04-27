@@ -1,25 +1,28 @@
-import logo from './logo.svg';
+import { useEffect } from 'react';
 import './App.css';
+import { BrowserRouter } from 'react-router-dom';
+import Rotas from './routes';
+import Header from './Components/Header';
+import axios from 'axios';
 
-function App() {
+
+export default function App() {
+
+  useEffect(() => {
+    getDados()
+  }, [])
+
+  const getDados = async () => {
+    const response = await axios.get('http://localhost:3333/SNAP')
+
+    console.log(response.data)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Header />
+      <Rotas />
+    </BrowserRouter>
   );
 }
 
-export default App;
