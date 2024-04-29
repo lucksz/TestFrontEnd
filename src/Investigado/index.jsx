@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
-import { Card, CardMedia, CardContent, CardActions, Button, Modal, Box } from '@mui/material';
+import { Card, CardMedia, CardContent, CardActions, Button, IconButton, Modal, Box, Divider } from '@mui/material';
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import { IoIosPhonePortrait } from "react-icons/io";
 import { IoIosMail } from "react-icons/io";
 import { BsBuildingsFill } from "react-icons/bs";
 import { FaHouse } from "react-icons/fa6";
+import { IoMdClose } from "react-icons/io";
 
 import InfoCompleta from './InfoCompleta';
 import Cellphones from './Cellphones';
+import Emails from './Emails';
 
 import './style.css'
+
 
 
 
 export default function Investigado() {
     const [openInfo, setOpenInfo] = useState(false);
     const [openCellphones, setOpenCellphones] = useState(false);
+    const [openEmails, setOpenEmails] = useState(false)
 
     const propriedadesModal = (w) => {
         return {
@@ -28,7 +32,7 @@ export default function Investigado() {
             bgcolor: 'background.paper',
             borderRadius: '10px',
             boxShadow: 24,
-            p: 4,
+            p: 0,
         }
     }
 
@@ -85,6 +89,7 @@ export default function Investigado() {
                         color='primary'
                         size='small'
                         style={{ width: '100%' }}
+                        onClick={() => setOpenEmails(true)}
                     >
                         Abrir
                     </Button>
@@ -152,6 +157,15 @@ export default function Investigado() {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={propriedadesModal(1300)}>
+                    <div className='modal-header'>
+                        <div className='modal-header-row'>
+                            <h1>Informação Completa</h1>
+                            <IconButton aria-label="fechar" onClick={() => setOpenInfo(false)}>
+                                <IoMdClose />
+                            </IconButton>
+                        </div>
+                        <Divider sx={{ width: '100%', marginTop: '1rem' }} />
+                    </div>
                     <InfoCompleta close={setOpenInfo} />
                 </Box>
             </Modal>
@@ -162,7 +176,35 @@ export default function Investigado() {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={propriedadesModal(1300)}>
+                    <div className='modal-header'>
+                        <div className='modal-header-row'>
+                            <h1>Telefones</h1>
+                            <IconButton aria-label="fechar" onClick={() => setOpenCellphones(false)}>
+                                <IoMdClose />
+                            </IconButton>
+                        </div>
+                        <Divider sx={{ width: '100%', marginTop: '1rem' }} />
+                    </div>
                     <Cellphones close={setOpenCellphones} />
+                </Box>
+            </Modal>
+            <Modal
+                open={openEmails}
+                onClose={() => setOpenEmails(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={propriedadesModal(1300)}>
+                    <div className='modal-header'>
+                        <div className='modal-header-row'>
+                            <h1>Emails</h1>
+                            <IconButton aria-label="fechar" onClick={() => setOpenEmails(false)}>
+                                <IoMdClose />
+                            </IconButton>
+                        </div>
+                        <Divider sx={{ width: '100%', marginTop: '1rem' }} />
+                    </div>
+                    <Emails close={setOpenEmails} />
                 </Box>
             </Modal>
         </div>

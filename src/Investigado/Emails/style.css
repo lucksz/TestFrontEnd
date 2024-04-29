@@ -1,0 +1,18 @@
+.emails-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 1rem;
+}
+
+.card-grid{
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+    gap: 1rem;
+}
+
+.logo-operadoras{
+    max-width: 2rem;
+}
