@@ -3,11 +3,13 @@ import { Card, CardMedia, CardContent, Button, IconButton, Modal, Box, Divider }
 import { BsBuildingsFill } from "react-icons/bs";
 import { IoMdClose } from "react-icons/io";
 import Cellphones from '../Cellphones';
+import Enderecos from '../Enderecos';
 
 import './style.css'
 
 export default function Empresas() {
     const [openCellphones, setOpenCellphones] = useState(false);
+    const [openEnderecos, setOpenEnderecos] = useState(false);
 
     const propriedadesModal = (w) => {
         return {
@@ -56,6 +58,7 @@ export default function Empresas() {
                             variant='contained'
                             color='primary'
                             size='small'
+                            onClick={() => setOpenEnderecos(true)}
                         >
                             ver
                         </Button>
@@ -90,6 +93,25 @@ export default function Empresas() {
                         <Divider sx={{ width: '100%', marginTop: '1rem' }} />
                     </div>
                     <Cellphones close={setOpenCellphones} />
+                </Box>
+            </Modal>
+            <Modal
+                open={openEnderecos}
+                onClose={() => setOpenEnderecos(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={propriedadesModal(1300)}>
+                    <div className='modal-header'>
+                        <div className='modal-header-row'>
+                            <h1>Endereços</h1>
+                            <IconButton aria-label="fechar" onClick={() => setOpenEnderecos(false)}>
+                                <IoMdClose />
+                            </IconButton>
+                        </div>
+                        <Divider sx={{ width: '100%', marginTop: '1rem' }} />
+                    </div>
+                    <Enderecos />
                 </Box>
             </Modal>
         </div>

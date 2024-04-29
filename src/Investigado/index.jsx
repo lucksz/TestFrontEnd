@@ -13,12 +13,9 @@ import Cellphones from './Cellphones';
 import Emails from './Emails';
 import Vinculos from './Vinculos';
 import Empresas from './Empresas';
+import Enderecos from './Enderecos';
 
 import './style.css'
-
-
-
-
 
 
 export default function Investigado() {
@@ -26,7 +23,8 @@ export default function Investigado() {
     const [openCellphones, setOpenCellphones] = useState(false);
     const [openEmails, setOpenEmails] = useState(false);
     const [openVinculos, setOpenVinculos] = useState(false);
-    const [openEmpresas, setOpenEmpresas] = useState(false)
+    const [openEmpresas, setOpenEmpresas] = useState(false);
+    const [openEnderecos, setOpenEnderecos] = useState(false);
 
     const propriedadesModal = (w) => {
         return {
@@ -152,6 +150,7 @@ export default function Investigado() {
                         color='primary'
                         size='small'
                         style={{ width: '100%' }}
+                        onClick={() => setOpenEnderecos(true)}
                     >
                         Abrir
                     </Button>
@@ -251,6 +250,25 @@ export default function Investigado() {
                         <Divider sx={{ width: '100%', marginTop: '1rem' }} />
                     </div>
                     <Empresas />
+                </Box>
+            </Modal>
+            <Modal
+                open={openEnderecos}
+                onClose={() => setOpenEnderecos(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={propriedadesModal(1300)}>
+                    <div className='modal-header'>
+                        <div className='modal-header-row'>
+                            <h1>Endereços</h1>
+                            <IconButton aria-label="fechar" onClick={() => setOpenEnderecos(false)}>
+                                <IoMdClose />
+                            </IconButton>
+                        </div>
+                        <Divider sx={{ width: '100%', marginTop: '1rem' }} />
+                    </div>
+                    <Enderecos />
                 </Box>
             </Modal>
         </div>
