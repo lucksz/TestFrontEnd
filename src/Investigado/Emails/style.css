@@ -7,7 +7,7 @@
     padding: 1rem;
 }
 
-.card-grid{
+.card-grid-emails{
     display: grid;
     grid-template-columns: 1fr 9fr;
     gap: 1rem;

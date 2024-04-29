@@ -9,7 +9,7 @@ export default function Emails() {
         <div className='emails-container'>
             <Card sx={{ minWidth: 275 }}>
                 <CardContent>
-                    <div className='card-grid'>
+                    <div className='card-grid-emails'>
                         <img className='logo-operadoras' src={oi} />
                         <span className='span-card-investigado'>email_teste@oi.com.br</span>
                     </div>
