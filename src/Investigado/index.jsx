@@ -12,8 +12,10 @@ import InfoCompleta from './InfoCompleta';
 import Cellphones from './Cellphones';
 import Emails from './Emails';
 import Vinculos from './Vinculos';
+import Empresas from './Empresas';
 
 import './style.css'
+
 
 
 
@@ -22,8 +24,9 @@ import './style.css'
 export default function Investigado() {
     const [openInfo, setOpenInfo] = useState(false);
     const [openCellphones, setOpenCellphones] = useState(false);
-    const [openEmails, setOpenEmails] = useState(false)
-    const [openVinculos, setOpenVinculos] = useState(false)
+    const [openEmails, setOpenEmails] = useState(false);
+    const [openVinculos, setOpenVinculos] = useState(false);
+    const [openEmpresas, setOpenEmpresas] = useState(false)
 
     const propriedadesModal = (w) => {
         return {
@@ -130,6 +133,7 @@ export default function Investigado() {
                         color='primary'
                         size='small'
                         style={{ width: '100%' }}
+                        onClick={() => setOpenEmpresas(true)}
                     >
                         Abrir
                     </Button>
@@ -228,6 +232,25 @@ export default function Investigado() {
                         <Divider sx={{ width: '100%', marginTop: '1rem' }} />
                     </div>
                     <Vinculos />
+                </Box>
+            </Modal>
+            <Modal
+                open={openEmpresas}
+                onClose={() => setOpenEmpresas(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={propriedadesModal(1300)}>
+                    <div className='modal-header'>
+                        <div className='modal-header-row'>
+                            <h1>Empresas</h1>
+                            <IconButton aria-label="fechar" onClick={() => setOpenEmpresas(false)}>
+                                <IoMdClose />
+                            </IconButton>
+                        </div>
+                        <Divider sx={{ width: '100%', marginTop: '1rem' }} />
+                    </div>
+                    <Empresas />
                 </Box>
             </Modal>
         </div>
