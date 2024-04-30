@@ -1,0 +1,15 @@
+.enderecos-container{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 1rem;
+    overflow-x: scroll;
+    gap: 1rem;
+}
+
+.card-row-enderecos{
+    display: flex;
+    flex-direction: row;
+    align-self: flex-start;
+    margin-top: 0.5rem;
+}
