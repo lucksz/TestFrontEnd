@@ -18,7 +18,7 @@ import { AppContext } from '../../App';
 
 import './style.css'
 
-export default function InfoCompleta(props) {
+export default function InfoCompleta() {
     const { investigado } = useContext(AppContext)
 
     return (

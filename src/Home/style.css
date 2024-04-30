@@ -12,3 +12,16 @@
 .information{
     font-weight: 700;
 }
+
+.card-animation {
+    animation: fadeOut 1s ease forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
