@@ -1,3 +1,9 @@
+.container-investigado-geral{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
 .container-investigado{
     display: flex;
     flex-direction: row;

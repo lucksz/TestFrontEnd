@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
-import { Card, CardMedia, CardContent, Button, IconButton, Modal, Box, Divider } from '@mui/material';
+import React, { useState, useContext } from 'react';
+import { Card, CardMedia, CardContent, Button, IconButton, Modal, Box, Divider, Tooltip } from '@mui/material';
 import { BsBuildingsFill } from "react-icons/bs";
 import { IoMdClose } from "react-icons/io";
 import Cellphones from '../Cellphones';
 import Enderecos from '../Enderecos';
 
+import { AppContext } from '../../App';
+
 import './style.css'
 
 export default function Empresas() {
+    const { empresas } = useContext(AppContext)
+
     const [openCellphones, setOpenCellphones] = useState(false);
     const [openEnderecos, setOpenEnderecos] = useState(false);
+    const [telefoneSelecionado, setTelefoneSelecionado] = useState([])
+    const [enderecoSelecionado, setEnderecoSelecionado] = useState([])
 
     const propriedadesModal = (w) => {
         return {
@@ -25,57 +31,86 @@ export default function Empresas() {
         }
     }
 
+    const abrirTelefone = (dados) => {
+        setTelefoneSelecionado(dados)
+
+        setOpenCellphones(true)
+    }
+
+    const abrirEndereco = (dados) => {
+        setEnderecoSelecionado(dados)
+
+        setOpenEnderecos(true)
+    }
+
     return (
         <div className='empresas-container'>
-            <Card sx={{ width: 275 }}>
-                <CardMedia sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center' }}>
-                    <BsBuildingsFill size={150} color='#C1C7D0' />
-                </CardMedia>
-                <CardContent sx={{ display: 'flex', flexDirection: 'column' }} >
-                    <div className='card-row-empresas'>
-                        <span className='information'>RAZÃO SOCIAL: </span>
-                        <span>NAVI CARNES INDUSTRIA E COMERCIO LTDA ME</span>
-                    </div>
-                    <div className='card-row-empresas'>
-                        <span className='information'>CNPJ: </span>
-                        <span>02222267000319</span>
-                    </div>
-                    <div className='card-row-empresas'>
-                        <span className='information'>ADMISSÃO: </span>
-                        <span>07/03/2020</span>
-                    </div>
-                    <div className='card-row-empresas'>
-                        <span className='information'>VINCULO: </span>
-                        <span>TESTE</span>
-                    </div>
-                    <div className='card-row-empresas'>
-                        <span className='information'>RENDA: </span>
-                        <span>3.121,00</span>
-                    </div>
-                    <div className='card-row-empresas'>
-                        <span className='information'>ENDEREÇOS: </span>
-                        <Button
-                            variant='contained'
-                            color='primary'
-                            size='small'
-                            onClick={() => setOpenEnderecos(true)}
-                        >
-                            ver
-                        </Button>
-                    </div>
-                    <div className='card-row-empresas'>
-                        <span className='information'>TELEFONES: </span>
-                        <Button
-                            variant='contained'
-                            color='primary'
-                            size='small'
-                            onClick={() => setOpenCellphones(true)}
-                        >
-                            ver
-                        </Button>
-                    </div>
-                </CardContent>
-            </Card>
+            {empresas.map((value, index) => (
+                <Card sx={{ width: 350 }} key={index}>
+                    <CardMedia sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center' }}>
+                        <BsBuildingsFill size={150} color='#C1C7D0' />
+                    </CardMedia>
+                    <CardContent sx={{ display: 'flex', flexDirection: 'column' }} >
+                        <div className='card-row-empresas'>
+                            <span className='information'>RAZÃO SOCIAL: </span>
+                            <span>{value['razao social']}</span>
+                        </div>
+                        <div className='card-row-empresas'>
+                            <span className='information'>CNPJ: </span>
+                            <span>{value['cnpj']}</span>
+                        </div>
+                        <div className='card-row-empresas'>
+                            <span className='information'>ADMISSÃO: </span>
+                            <span>{value['admissao'] ? value['admissao'] : 'Desconhecido'}</span>
+                        </div>
+                        <div className='card-row-empresas'>
+                            <span className='information'>VINCULO: </span>
+                            <span>{value['vinculo']}</span>
+                        </div>
+                        <div className='card-row-empresas'>
+                            <span className='information'>RENDA: </span>
+                            <span>{value['renda'] ? value['renda'] : 'Desconhecido'}</span>
+                        </div>
+                        <div className='card-row-empresas'>
+                            <span className='information'>ENDEREÇOS: </span>
+                            <Button
+                                variant='contained'
+                                color='primary'
+                                size='small'
+                                onClick={() => abrirEndereco(value['endereco'])}
+                            >
+                                ver
+                            </Button>
+                        </div>
+                        <div className='card-row-empresas'>
+                            <span className='information'>TELEFONES: </span>
+                            {value['telefone'] ? (
+                                <Button
+                                    variant='contained'
+                                    color='primary'
+                                    size='small'
+                                    onClick={() => abrirTelefone(value['telefone'])}
+                                >
+                                    ver
+                                </Button>
+                            ) : (
+                                <Tooltip title='Telefone desconhecido'>
+                                    <div>
+                                        <Button
+                                            variant='contained'
+                                            color='primary'
+                                            size='small'
+                                            disabled
+                                        >
+                                            ver
+                                        </Button>
+                                    </div>
+                                </Tooltip>
+                            )}
+                        </div>
+                    </CardContent>
+                </Card>
+            ))}
             <Modal
                 open={openCellphones}
                 onClose={() => setOpenCellphones(false)}
@@ -92,7 +127,7 @@ export default function Empresas() {
                         </div>
                         <Divider sx={{ width: '100%', marginTop: '1rem' }} />
                     </div>
-                    <Cellphones close={setOpenCellphones} />
+                    <Cellphones close={setOpenCellphones} telefones={telefoneSelecionado} />
                 </Box>
             </Modal>
             <Modal
@@ -111,7 +146,7 @@ export default function Empresas() {
                         </div>
                         <Divider sx={{ width: '100%', marginTop: '1rem' }} />
                     </div>
-                    <Enderecos />
+                    <Enderecos enderecos={enderecoSelecionado} />
                 </Box>
             </Modal>
         </div>

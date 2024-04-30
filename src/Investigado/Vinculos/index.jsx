@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
-import { Card, CardMedia, CardContent, Button, IconButton, Modal, Box, Divider } from '@mui/material';
+import React, { useState, useContext } from 'react';
+import { Card, CardMedia, CardContent, Button, IconButton, Modal, Box, Divider, Tooltip } from '@mui/material';
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { IoMdClose } from "react-icons/io";
 import Cellphones from '../Cellphones';
 import Enderecos from '../Enderecos';
+import { AppContext } from '../../App';
 
 import './style.css'
 
 
 export default function Vinculos() {
+    const { vinculos } = useContext(AppContext)
+
     const [openCellphones, setOpenCellphones] = useState(false);
     const [openEnderecos, setOpenEnderecos] = useState(false);
+    const [telefoneSelecionado, setTelefoneSelecionado] = useState([])
+    const [enderecoSelecionado, setEnderecoSelecionado] = useState([])
 
     const propriedadesModal = (w) => {
         return {
@@ -26,61 +31,107 @@ export default function Vinculos() {
         }
     }
 
+    const abrirTelefone = (dados) => {
+        setTelefoneSelecionado(dados)
+
+        setOpenCellphones(true)
+    }
+
+    const abrirEndereco = (dados) => {
+        setEnderecoSelecionado(dados)
+
+        setOpenEnderecos(true)
+    }
+
     return (
         <div className='vinculos-container'>
-            <Card sx={{ minWidth: 275 }}>
-                <CardMedia sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center' }}>
-                    <IoPersonCircleSharp size={150} color='#C1C7D0' />
-                </CardMedia>
-                <CardContent sx={{ display: 'flex', flexDirection: 'column' }} >
-                    <div className='card-row-vinculos'>
-                        <span className='information'>NOME: </span>
-                        <span>JOSÉ MARIA TECHBIZ</span>
-                    </div>
-                    <div className='card-row-vinculos'>
-                        <span className='information'>CPF: </span>
-                        <span>94436504352</span>
-                    </div>
-                    <div className='card-row-vinculos'>
-                        <span className='information'>VINCULO: </span>
-                        <span>TESTE</span>
-                    </div>
-                    <div className='card-row-vinculos'>
-                        <span className='information'>ENDEREÇOS: </span>
-                        <Button
-                            variant='contained'
-                            color='primary'
-                            size='small'
-                            onClick={() => setOpenEnderecos(true)}
-                        >
-                            ver
-                        </Button>
-                    </div>
-                    <div className='card-row-vinculos'>
-                        <span className='information'>TELEFONES: </span>
-                        <Button
-                            variant='contained'
-                            color='primary'
-                            size='small'
-                            onClick={() => setOpenCellphones(true)}
-                        >
-                            ver
-                        </Button>
-                    </div>
-                    <div className='card-row-vinculos'>
-                        <span className='information'>PROCON: </span>
-                        <span>TESTE</span>
-                    </div>
-                    <div className='card-row-vinculos'>
-                        <span className='information'>SEXO: </span>
-                        <span>TESTE</span>
-                    </div>
-                    <div className='card-row-vinculos'>
-                        <span className='information'>TITULO DE ELEITOR: </span>
-                        <span>TESTE</span>
-                    </div>
-                </CardContent>
-            </Card>
+            {vinculos.map((value, index) => (
+                <Card sx={{ minWidth: 350 }} key={index}>
+                    <CardMedia sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center' }}>
+                        <IoPersonCircleSharp size={150} color='#C1C7D0' />
+                    </CardMedia>
+                    <CardContent sx={{ display: 'flex', flexDirection: 'column' }} >
+                        <div className='card-row-vinculos'>
+                            <span className='information'>NOME: </span>
+                            <span>{value['full name']}</span>
+                        </div>
+                        <div className='card-row-vinculos'>
+                            <span className='information'>CPF: </span>
+                            <span>{value['cpf'] ? value['cpf'] : 'Desconhecido'}</span>
+                        </div>
+                        <div className='card-row-vinculos'>
+                            <span className='information'>VINCULO: </span>
+                            <span>{value['vinculo']}</span>
+                        </div>
+                        <div className='card-row-vinculos'>
+                            <span className='information'>PROCON: </span>
+                            <span>{value['procon'] ? value['procon'] : 'Desconhecido'}</span>
+                        </div>
+                        <div className='card-row-vinculos'>
+                            <span className='information'>SEXO: </span>
+                            <span>{value['sexo'] ? value['sexo'] : 'Desconhecido'}</span>
+                        </div>
+                        <div className='card-row-vinculos'>
+                            <span className='information'>TITULO DE ELEITOR: </span>
+                            <span>{value['titulo de eleitor'] ? value['titulo de eleitor'] : 'Desconhecido'}</span>
+                        </div>
+                        <div className='card-row-vinculos'>
+                            <span className='information'>ENDEREÇOS: </span>
+                            {value['endereco'] || value['location'] ? (
+                                <Button
+                                    variant='contained'
+                                    color='primary'
+                                    size='small'
+                                    onClick={() => abrirEndereco(value['endereco'] || value['location'])}
+                                >
+                                    ver
+                                </Button>
+                            ) : (
+                                <Tooltip title='Endereço desconhecido'>
+                                    <div>
+                                        <Button
+                                            variant='contained'
+                                            color='primary'
+                                            size='small'
+                                            disabled
+                                        >
+                                            ver
+                                        </Button>
+                                    </div>
+                                </Tooltip>
+                            )}
+                        </div>
+                        <div className='card-row-vinculos'>
+                            <span className='information'>TELEFONES: </span>
+                            {value['telefone'] ? (
+                                <Button
+                                    variant='contained'
+                                    color='primary'
+                                    size='small'
+                                    onClick={() => abrirTelefone(value['telefone'])}
+                                >
+                                    ver
+                                </Button>
+                            ) : (
+                                <Tooltip title='Telefone desconhecido'>
+                                    <div>
+                                        <Button
+                                            variant='contained'
+                                            color='primary'
+                                            size='small'
+                                            disabled
+                                        >
+                                            ver
+                                        </Button>
+                                    </div>
+                                </Tooltip>
+                            )}
+                        </div>
+                    </CardContent>
+                </Card>
+            ))}
+
+
             <Modal
                 open={openCellphones}
                 onClose={() => setOpenCellphones(false)}
@@ -97,7 +148,7 @@ export default function Vinculos() {
                         </div>
                         <Divider sx={{ width: '100%', marginTop: '1rem' }} />
                     </div>
-                    <Cellphones close={setOpenCellphones} />
+                    <Cellphones close={setOpenCellphones} telefones={telefoneSelecionado} />
                 </Box>
             </Modal>
             <Modal
@@ -116,7 +167,7 @@ export default function Vinculos() {
                         </div>
                         <Divider sx={{ width: '100%', marginTop: '1rem' }} />
                     </div>
-                    <Enderecos />
+                    <Enderecos enderecos={enderecoSelecionado} />
                 </Box>
             </Modal>
         </div>
