@@ -7,7 +7,7 @@ import './style.css'
 export default function Home() {
     return (
         <div className='home-container'>
-            <Card sx={{ minWidth: 275 }}>
+            <Card sx={{ minWidth: 275 }} className='card-animation'>
                 <CardMedia sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center' }}>
                     <IoPersonCircleSharp size={150} color='#C1C7D0' />
                 </CardMedia>

@@ -76,13 +76,6 @@ export default function Cellphones(props) {
                         </div>
                     </CardContent>
                 </Card>
-                <Button
-                    variant='contained'
-                    color='primary'
-                    onClick={() => close(false)}
-                >
-                    fechar
-                </Button>
             </div>
         </div>
     );

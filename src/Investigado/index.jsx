@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Card, CardMedia, CardContent, CardActions, Button, IconButton, Modal, Box, Divider } from '@mui/material';
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { BsFillInfoCircleFill } from "react-icons/bs";
@@ -27,6 +27,8 @@ export default function Investigado() {
     const [openVinculos, setOpenVinculos] = useState(false);
     const [openEmpresas, setOpenEmpresas] = useState(false);
     const [openEnderecos, setOpenEnderecos] = useState(false);
+    
+    const [animateCards, setAnimateCards] = useState([]);
 
     const {
         investigado,
@@ -48,11 +50,29 @@ export default function Investigado() {
         }
     }
 
+    useEffect(() => {
+        // Adicionar cada card individualmente com um pequeno atraso entre eles
+        const cardTimeouts = [];
+        const cards = document.querySelectorAll('.card-to-animate');
+
+        cards.forEach((card, index) => {
+            const timeout = setTimeout(() => {
+                setAnimateCards(prevState => [...prevState, index]);
+            }, index * 500); // Ajuste o tempo de atraso conforme necessário
+            cardTimeouts.push(timeout);
+        });
+
+        // Limpar os timeouts quando o componente for desmontado
+        return () => {
+            cardTimeouts.forEach(timeout => clearTimeout(timeout));
+        };
+    }, []);
+
     return (
         <div className='container-investigado-geral'>
             <h1 style={{ marginLeft: '1rem' }}>Investigado: {investigado['full name']}</h1>
             <div className='container-investigado'>
-                <Card sx={{ minWidth: 275, margin: '1rem' }}>
+                <Card sx={{ minWidth: 275, margin: '1rem' }} className={animateCards.includes(0) ? 'card-animation' : 'card-to-animate'} >
                     <CardMedia sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center', marginTop: '1rem' }}>
                         <BsFillInfoCircleFill size={150} color='#C1C7D0' />
                     </CardMedia>
@@ -71,7 +91,7 @@ export default function Investigado() {
                         </Button>
                     </CardActions>
                 </Card>
-                <Card sx={{ minWidth: 275, margin: '1rem' }}>
+                <Card sx={{ minWidth: 275, margin: '1rem' }} className={animateCards.includes(1) ? 'card-animation' : 'card-to-animate'} >
                     <CardMedia sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center', marginTop: '1rem' }}>
                         <IoIosPhonePortrait size={150} color='#C1C7D0' />
                     </CardMedia>
@@ -90,7 +110,7 @@ export default function Investigado() {
                         </Button>
                     </CardActions>
                 </Card>
-                <Card sx={{ minWidth: 275, margin: '1rem' }}>
+                <Card sx={{ minWidth: 275, margin: '1rem' }} className={animateCards.includes(2) ? 'card-animation' : 'card-to-animate'} >
                     <CardMedia sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center', marginTop: '1rem' }}>
                         <IoIosMail size={150} color='#C1C7D0' />
                     </CardMedia>
@@ -109,7 +129,7 @@ export default function Investigado() {
                         </Button>
                     </CardActions>
                 </Card>
-                <Card sx={{ minWidth: 275, margin: '1rem' }}>
+                <Card sx={{ minWidth: 275, margin: '1rem' }} className={animateCards.includes(3) ? 'card-animation' : 'card-to-animate'} >
                     <CardMedia sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center', marginTop: '1rem' }}>
                         <IoPersonCircleSharp size={150} color='#C1C7D0' />
                     </CardMedia>
@@ -128,7 +148,7 @@ export default function Investigado() {
                         </Button>
                     </CardActions>
                 </Card>
-                <Card sx={{ minWidth: 275, margin: '1rem' }}>
+                <Card sx={{ minWidth: 275, margin: '1rem' }} className={animateCards.includes(4) ? 'card-animation' : 'card-to-animate'} >
                     <CardMedia sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center', marginTop: '1rem' }}>
                         <BsBuildingsFill size={150} color='#C1C7D0' />
                     </CardMedia>
@@ -147,7 +167,7 @@ export default function Investigado() {
                         </Button>
                     </CardActions>
                 </Card>
-                <Card sx={{ minWidth: 275, margin: '1rem' }}>
+                <Card sx={{ minWidth: 275, margin: '1rem' }} className={animateCards.includes(5) ? 'card-animation' : 'card-to-animate'} >
                     <CardMedia sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center', marginTop: '1rem' }}>
                         <FaHouse size={150} color='#C1C7D0' />
                     </CardMedia>
@@ -173,17 +193,17 @@ export default function Investigado() {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >
-                    <Box sx={propriedadesModal(1300)}>
+                    <Box sx={propriedadesModal('80%')}>
                         <div className='modal-header'>
                             <div className='modal-header-row'>
-                                <h1>Informação Completa</h1>
+                                <h2>Informação Completa</h2>
                                 <IconButton aria-label="fechar" onClick={() => setOpenInfo(false)}>
                                     <IoMdClose />
                                 </IconButton>
                             </div>
                             <Divider sx={{ width: '100%', marginTop: '1rem' }} />
                         </div>
-                        <InfoCompleta close={setOpenInfo} />
+                        <InfoCompleta />
                     </Box>
                 </Modal>
                 <Modal
@@ -192,10 +212,10 @@ export default function Investigado() {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >
-                    <Box sx={propriedadesModal(1300)}>
+                    <Box sx={propriedadesModal('80%')}>
                         <div className='modal-header'>
                             <div className='modal-header-row'>
-                                <h1>Telefones</h1>
+                                <h2>Telefones</h2>
                                 <IconButton aria-label="fechar" onClick={() => setOpenCellphones(false)}>
                                     <IoMdClose />
                                 </IconButton>
@@ -211,10 +231,10 @@ export default function Investigado() {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >
-                    <Box sx={propriedadesModal(1300)}>
+                    <Box sx={propriedadesModal('80%')}>
                         <div className='modal-header'>
                             <div className='modal-header-row'>
-                                <h1>Emails</h1>
+                                <h2>Emails</h2>
                                 <IconButton aria-label="fechar" onClick={() => setOpenEmails(false)}>
                                     <IoMdClose />
                                 </IconButton>
@@ -230,10 +250,10 @@ export default function Investigado() {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >
-                    <Box sx={propriedadesModal(1300)}>
+                    <Box sx={propriedadesModal('80%')}>
                         <div className='modal-header'>
                             <div className='modal-header-row'>
-                                <h1>Vinculos</h1>
+                                <h2>Vinculos</h2>
                                 <IconButton aria-label="fechar" onClick={() => setOpenVinculos(false)}>
                                     <IoMdClose />
                                 </IconButton>
@@ -249,10 +269,10 @@ export default function Investigado() {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >
-                    <Box sx={propriedadesModal(1300)}>
+                    <Box sx={propriedadesModal('80%')}>
                         <div className='modal-header'>
                             <div className='modal-header-row'>
-                                <h1>Empresas</h1>
+                                <h2>Empresas</h2>
                                 <IconButton aria-label="fechar" onClick={() => setOpenEmpresas(false)}>
                                     <IoMdClose />
                                 </IconButton>
@@ -268,10 +288,10 @@ export default function Investigado() {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >
-                    <Box sx={propriedadesModal(1300)}>
+                    <Box sx={propriedadesModal('80%')}>
                         <div className='modal-header'>
                             <div className='modal-header-row'>
-                                <h1>Endereços</h1>
+                                <h2>Endereços</h2>
                                 <IconButton aria-label="fechar" onClick={() => setOpenEnderecos(false)}>
                                     <IoMdClose />
                                 </IconButton>
